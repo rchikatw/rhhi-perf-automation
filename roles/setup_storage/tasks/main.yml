@@ -1,0 +1,24 @@
+     - name: Create a volume group on top of {{disk_name}}
+       lvg:
+         vg: postgresql
+         pvs: {{disk_name}}
+         state: present
+
+
+     - name: Create logical volume pg_data
+       lvol:
+         vg: postgresql
+         lv: pg_data
+         size: 100%PVS
+
+     - name: Format and mount file system
+       filesystem:
+         fstype: xfs
+         dev: /dev/postgresql/pg_data
+
+     - name: Mount fs on /var/lib/pgsql/data
+       mount:
+         path: /var/lib/pgsql/data
+         src: /dev/postgresql/pg_data
+         fstype: xfs
+         state: mounted

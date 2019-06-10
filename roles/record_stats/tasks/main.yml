@@ -1,0 +1,23 @@
+---
+- name: Initiate IOSTAT logs
+  shell: 'nohup iostat -dkxtz -c 10 -N > "{{ iostat_dir }}"/"{{ test }}" &'
+
+- name: Initiate VMSTAT logs
+  shell: 'nohup vmstat -n 10 > "{{ vmstat_dir }}"/"{{ test }}" &'
+
+- name: Initiate MPSTAT logs
+  shell: 'nohup sar -r 5 > "{{ mpstat_dir }}"/"{{ test }}" &'
+  ignore_errors: yes
+
+- name: Initiate TOP logs
+  shell: 'nohup top -bH -d 10 > "{{ top_dir }}"/"{{ test }}" &'
+
+- name: Initiate NETWORK logs
+  shell: 'nohup sar -n DEV 10 > "{{ network_dir }}"/"{{ test }}" &'
+
+- name: Initiate PIDSTAT logs
+  shell: 'nohup pidstat -d 5 > "{{ pidstat_dir_1 }}"/"{{ test }}" &'
+
+- name: Initiate PIDSTAT logs
+  shell: 'nohup pidstat -urh 5 > "{{ pidstat_dir_2 }}"/"{{ test }}" &'
+...

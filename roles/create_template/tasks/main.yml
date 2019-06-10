@@ -1,0 +1,13 @@
+- name: Create oVirt image template
+  auth: "{{ovirt_auth}}"
+  vars:
+    qcow_url: "{{ qcow_url }}"
+    template_cluster: "{{template_cluster}}"
+    template_name: "{{template_name}}"
+    template_memory: "{{template_memory}}"
+    template_cpu: "{{template_cpu}}"
+    template_disk_size: "{{template_disk_size}}"
+    template_disk_storage: "{{template_disk_storage}}"
+
+  roles:
+    - ovirt-image-template

@@ -1,0 +1,9 @@
+[rhhihosts]
+rhsdev-grafton[2:4].lab.eng.blr.redhat.com
+
+[profiling_server]
+rhsdev-grafton4.lab.eng.blr.redhat.com
+[all:vars]
+ansible_connection=ssh
+ansible_ssh_user=root
+ansible_ssh_pass=redhat123

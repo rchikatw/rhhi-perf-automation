@@ -1,0 +1,17 @@
+ - name: Debugging
+   debug:
+     msg : "{{vm_name}}"
+ - name: Initialize Pg-bench vm
+   ovirt_vms:
+     auth: "{{ ovirt_auth }}"
+     template: "{{template_name}}"
+     cluster: "{{template_cluster}}"
+     name: "{{vm_name}}"
+     cloud_init:
+       root_password: "{{root_password}}"
+     cloud_init_nics:
+      - nic_name: eth0
+        nic_boot_protocol: dhcp
+        nic_on_boot: true
+     state: running
+     wait: true
