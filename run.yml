@@ -18,3 +18,4 @@
 
    roles:
      - setup_ovirt_env
+     - setup_vm_env

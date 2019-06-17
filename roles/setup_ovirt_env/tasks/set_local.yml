@@ -67,6 +67,6 @@
     #     var: ssh_config_file_key_addition
 
     - name: distribute the ssh key to the remote hosts
-      shell: "sshpass -p \"{{root_password}}\" ssh-copy-id -o StrictHostKeyChecking=no -i ~/.ssh/{{ssh_key_filename}}.pub -p \"root@{{ovirt_nics[0].reported_devices[0].ips[0].address}}\""
+      shell: "sshpass -p \"{{root_password}}\" ssh-copy-id -o StrictHostKeyChecking=no -i ~/.ssh/{{ssh_key_filename}}.pub  \"root@{{vm_ip}}\""
       register: ssh_copy_id_execution
       failed_when: ssh_copy_id_execution.rc != 0

@@ -1,0 +1,4 @@
+---
+
+- import_tasks: setup_postgresql.yml
+  delegate_to: "{{vm_ip}}"

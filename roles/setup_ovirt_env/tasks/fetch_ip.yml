@@ -1,22 +1,18 @@
 ---
-- name: Wait for VMs IPv4
-  ovirt_vm_facts:
-    auth: "{{ ovirt_auth }}"
-    pattern: "name={{ vm_name }}"
-    fetch_nested: true
-    nested_attributes: ips
-  until: "ovirt_vms | ovirtvmipv4 | length > 0"
-  retries: 10
-  delay: 5
+ - name: Wait for VMs IPv4
+   ovirt_vms_facts:
+     auth: "{{ ovirt_auth }}"
+     pattern: "name={{ vm_name }}"
+     fetch_nested: true
+     nested_attributes: ips
+   until: "ovirt_vms | ovirtvmipv4 | length > 0"
+   retries: 15
+   delay: 10
 
-- name: Set Ip of the VM
-  set_fact:
-    vm_ip: "{{ ovirt_vms | ovirtvmipv4 }}"
+ - name: Set Ip of the VM
+   set_fact:
+     vm_ip: "{{ ovirt_vms | ovirtvmipv4}}"
 
-- name: Debug
-  debug:
-    msg: VM ip is "{{vm_ip}}"
-
-#- name: Debugging
-#  debug:
-#    msg: IP of vm {{ovirt_nics[0].reported_devices[0].ips[0].address}}
+ - name: Debugging
+   debug:
+     msg: Ip of vm {{vm_ip}}
