@@ -1,0 +1,11 @@
+---
+#- import_tasks: create_template.yml
+- import_tasks: init_vm.yml.yml
+#- import_tasks: fetch_ip.yml
+#- import_tasks: set_local.yml
+#- import_tasks: create_disks.yml
+#- import_tasks: setup_postgresql.yml
+#- import_tasks: setup_storage.yml
+#- import_tasks: record_stats.yml
+#- import_tasks: run_pgbench.yml
+#- import_tasks:  stop_stats_records.yml

@@ -1,5 +1,5 @@
 ---
- - name : Connecting to Ovirt
+ - name: Connecting to Ovirt
    hosts: profiling_server
    remote_user: root
    become: true
@@ -13,15 +13,8 @@
          insecure: yes
          username: "{{engine_user}}"
          password: "{{engine_password}}"
+       tags:
+         - always
 
    roles:
-#    - create_template
-     - init_vm
-#    - fetch_ip
-#    - set_local
-#    - create_disks
-#    - setup_postgresql
-#    - setup_storage
-#    - record_stats
-#    - run_pgbench
-#    - stop_stats_records
+     - setup_ovirt_env

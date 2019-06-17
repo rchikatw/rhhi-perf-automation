@@ -7,8 +7,9 @@ engine_password: test123
 
 # Template specifics
 qcow_url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+#qcow_url: https://templates.ovirt.org/repo/el7.6-base-4.xz
 template_cluster: Default
-template_name: centos7_template
+template_name: km-centos7_template
 #template_name: CentOS75
 template_memory: 4GiB
 template_cpu: 2

@@ -7,7 +7,7 @@
      template: "{{template_name}}"
      cluster: "{{template_cluster}}"
      name: "{{vm_name}}"
-     cloud_init:
+       cloud_init:
        root_password: "{{root_password}}"
      cloud_init_nics:
       - nic_name: eth0
