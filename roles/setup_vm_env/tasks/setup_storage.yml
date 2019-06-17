@@ -1,7 +1,8 @@
+---
      - name: Create a volume group on top of {{disk_name}}
        lvg:
          vg: postgresql
-         pvs: {{disk_name}}
+         pvs: "{{disk_name}}"
          state: present
 
 

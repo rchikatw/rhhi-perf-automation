@@ -9,8 +9,8 @@ engine_password: test123
 qcow_url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
 #qcow_url: https://templates.ovirt.org/repo/el7.6-base-4.xz
 template_cluster: Default
-template_name: km-centos7_template
-#template_name: CentOS75
+#template_name: km-centos7_template
+template_name: CentOS75
 template_memory: 4GiB
 template_cpu: 2
 template_disk_size: 10GiB
@@ -21,6 +21,10 @@ vm_name: km-pgBench-vm
 root_password: redhat123
 ssh_key_filename: ansible_rsa
 
-#Disk
-
-disk_name: /dev/vda
+#VM_Disk
+vm_disk_name: pgbench-test-disk
+disk_name: /dev/sdb
+disk_size: 10GiB
+disk_format: cow
+vm_disk_storage_domain: vmstore
+vm_disk_interface: virtio_scsi

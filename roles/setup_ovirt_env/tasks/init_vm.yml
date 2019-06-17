@@ -1,6 +1,7 @@
  - name: Debugging
    debug:
      msg : "{{vm_name}}"
+
  - name: Initialize Pg-bench vm
    ovirt_vms:
      auth: "{{ ovirt_auth }}"

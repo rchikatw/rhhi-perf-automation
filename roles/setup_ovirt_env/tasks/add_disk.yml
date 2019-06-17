@@ -1,0 +1,12 @@
+---
+- name: Add disk to vm
+  ovirt_disks:
+    auth: "{{ovirt_auth}}"
+    name: "{{vm_disk_name}}"
+    vm_name: "{{vm_name}}"
+    size: "{{disk_size}}"
+    format: "{{disk_format}}"
+    storage_domain: "{{vm_disk_storage_domain}}"
+    interface: "{{vm_disk_interface}}"
+    state: attached
+    wait: true
