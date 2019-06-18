@@ -36,7 +36,7 @@ folders:
   - /home/root/rhhi-test-automation/extras
   - /home/root/rhhi-test-automation/sysbench-results
   - /home/root/rhhi-test-automation/fio-results
-  - /home/root/rhhi-test-automation/pgbench-results/hypervisor_stats
+  - /home/root/rhhi-test-automation/sysbench-results/hypervisor_stats
   - /home/root/rhhi-test-automation/pgbench-results/gprofile_stats
 
 #SYSbench specifics
