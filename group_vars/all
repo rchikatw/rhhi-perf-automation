@@ -41,8 +41,8 @@ folders:
 
 #SYSbench specifics
 mysql_root_password: pass@123
-sysbench_table_size: 10000
-sysbench_number_of_table: 10
+sysbench_table_size: 10
+sysbench_number_of_table: 5
 
 #Gluster specifics
 gluster_vol_profiling: vmstore

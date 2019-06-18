@@ -1,20 +1,26 @@
 ---
-    - import_tasks: record_stats.yml
-      vars:
-        step: pre-runs
+#    - import_tasks: record_stats.yml
+#      vars:
+#        step: pre-runs
 
-    - include_tasks: run_sysbench_test.yml
-      delegate_to: "{{vm_ip}}"
+    - name: run test
+      include_role:
+        name: run_sysbench_test
 
-    - import_tasks: polling_sysbench.yml
-      delegate_to: "{{vm_ip}}"
+    - name: Polling sysbench test
+      include_role:
+        name: polling_sysbench
 
-    - import_tasks: kill_stats.yml
+#    - import_tasks: kill_stats.yml
 
     - name: Take a 5 second pause
       shell: sleep 5
+      delegate_to: "{{vm_ip}}"
 
-    - import_tasks: clear_cache.yml
+#    - import_tasks: clear_cache.yml
+
+    - name: Clearing the Pagecache and Slabcache
+      shell: "sync; echo 3 > /proc/sys/vm/drop_caches"
 
     - name: Restarting MySQL to clear the caches
       delegate_to: "{{vm_ip}}"

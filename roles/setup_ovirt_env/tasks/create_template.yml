@@ -9,5 +9,5 @@
     template_disk_size: "{{template_disk_size}}"
     template_disk_storage: "{{template_disk_storage}}"
 
-  roles:
-     - ovirt.image-template
+  include_role:
+    name: ovirt.image-template

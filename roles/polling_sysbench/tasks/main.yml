@@ -1,0 +1,6 @@
+---
+    - name: Running Sysbench polling script
+      delegate_to: "{{vm_ip}}"
+      run_once: true
+      shell: 'sh "{{results_root_folder}}"/extras/polling_script.sh'
+...

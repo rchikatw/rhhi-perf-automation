@@ -39,3 +39,6 @@
   vars:
     step: post-sysbench-runs
 
+
+- import_tasks:  kill_stats.yml
+
