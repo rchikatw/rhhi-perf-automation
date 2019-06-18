@@ -1,0 +1,10 @@
+---
+
+- name: Setup  stats collection folder
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+  with_items: "{{folders}}"

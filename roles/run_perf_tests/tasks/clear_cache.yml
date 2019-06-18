@@ -1,0 +1,4 @@
+---
+- name: Clearing the Pagecache and Slabcache
+  shell: "sync; echo 3 > /proc/sys/vm/drop_caches"
+...

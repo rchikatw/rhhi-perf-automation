@@ -1,0 +1,13 @@
+---
+- name: Kill stat collection processes
+  shell: 'pkill "{{ process }}"'
+  loop:
+      - iostat
+      - vmstat
+      - mpstat
+      - top
+      - sar
+      - pidstat
+  loop_control:
+    loop_var: process
+  ignore_errors: yes

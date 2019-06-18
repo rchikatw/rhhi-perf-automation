@@ -4,6 +4,3 @@
 - import_tasks: fetch_ip.yml
 - import_tasks: set_local.yml
 - import_tasks: add_disk.yml
-#- import_tasks: record_stats.yml
-#- import_tasks: run_pgbench.yml
-#- import_tasks:  stop_stats_records.yml

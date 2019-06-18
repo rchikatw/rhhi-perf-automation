@@ -1,6 +1,28 @@
 ---
 
-- import_tasks: setup_storage.yml
+#- import_tasks: setup_storage_pgbench.yml
+#  delegate_to: "{{vm_ip}}"
+#- import_tasks: setup_postgresql.yml
+#  delegate_to: "{{vm_ip}}"
+
+- import_tasks: setup_host_stat_collection_env.yml
+
+- import_tasks: setup_sysbench_vm.yml
   delegate_to: "{{vm_ip}}"
-- import_tasks: setup_postgresql.yml
+
+- name: Setup  stats collection folder
   delegate_to: "{{vm_ip}}"
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+  with_items: "{{folders}}"
+
+
+- name: Copy Sysbench Polling Script
+  delegate_to: "{{ vm_ip}}"
+  template:
+    src: polling_script.sh.j2
+    dest: "{{results_root_folder}}/extras/polling_script.sh"

@@ -56,6 +56,6 @@
       register: ssh_config_file_key_addition
 
     - name: distribute the ssh key to the vm
-      shell: "sshpass -p \"{{root_password}}\" ssh-copy-id -o StrictHostKeyChecking=no -i ~/.ssh/{{ssh_key_filename}}.pub  \"root@{{vm_ip}}\""
+      shell: "sshpass -p \"{{vm_root_password}}\" ssh-copy-id -o StrictHostKeyChecking=no -i ~/.ssh/{{ssh_key_filename}}.pub  \"root@{{vm_ip}}\""
       register: ssh_copy_id_execution
       failed_when: ssh_copy_id_execution.rc != 0

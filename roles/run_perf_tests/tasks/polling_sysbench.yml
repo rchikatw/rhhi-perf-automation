@@ -1,0 +1,5 @@
+---
+    - name: Running Sysbench polling script
+      run_once: true
+      shell: 'sh "{{results_root_folder}}"/extras/polling_script.sh'
+...

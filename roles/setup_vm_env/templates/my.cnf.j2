@@ -1,0 +1,38 @@
+[client-server]
+# Uncomment these if you want to use a nonstandard connection to MariaDB
+#socket=/tmp/mysql.sock
+#port=3306
+
+# This will be passed to all MariaDB clients
+[client]
+#password=my_password
+
+# The MariaDB server
+[mysqld]
+# Directory where you want to put your data
+data=/perf1/mysql_data
+# Directory for the errmsg.sys file in the language you want to use
+#language=/usr/share/mysql/english
+# Create a file where the InnoDB/XtraDB engine stores it's data
+innodb_data_home_dir = /perf1/mysql_data
+innodb_data_file_path = ibdata1:128M:autoextend
+innodb_log_group_home_dir = /perf1/mysql_data
+innodb_buffer_pool_size = 4096M
+innodb_additional_mem_pool_size = 32M
+innodb_log_file_size = 256M
+innodb_log_buffer_size = 16M
+## write logs every minute instead of every transaction
+innodb_flush_log_at_trx_commit = 0
+innodb_lock_wait_timeout = 50
+innodb_doublewrite = 0
+innodb_flush_method = O_DIRECT
+innodb_thread_concurrency = 0
+innodb_max_dirty_pages_pct = 80
+#loose-innodb_file_per_table
+
+# This is the prefix name to be used for all log, error and replication files
+log-basename=mysqld
+
+# Enable logging by default to help find problems
+##general-log
+#log-slow-queries

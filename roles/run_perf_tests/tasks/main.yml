@@ -1,0 +1,41 @@
+---
+- import_tasks: start_gluster_profile.yml
+
+- import_tasks: get_and_save_gprofile_results.yml
+  vars:
+    step: pre-init-db
+
+- import_tasks: record_stats.yml
+  vars:
+    step: init-db
+
+- import_tasks: record_db_populate_time.yml
+  vars:
+    step: start
+
+- import_tasks: setup_sysbench_db.yml
+  delegate_to: "{{vm_ip}}"
+
+- import_tasks: record_db_populate_time.yml
+  vars:
+    step: stop
+
+- import_tasks: kill_stats.yml
+
+- import_tasks: get_and_save_gprofile_results.yml
+  vars:
+    step: post-init-db
+
+- import_tasks: record_stats.yml
+  vars:
+    step: sysbench-run
+
+- include_tasks: sysbench-runs.yml thread_count="{{ item }}"
+  delegate_to: "{{vm_ip}}"
+  with_items:
+      - [10,20,40,80,120,140]
+
+- import_tasks: get_and_save_gprofile_results.yml
+  vars:
+    step: post-sysbench-runs
+

@@ -1,5 +1,4 @@
 
-
 # Engine specifics
 engine_fqdn: https://rhhi-engine1.redhat.com/ovirt-engine/api
 engine_user: admin@internal
@@ -18,7 +17,7 @@ template_disk_storage: vmstore
 
 #VM
 vm_name: km-pgBench-vm
-root_password: redhat123
+vm_root_password: redhat123
 ssh_key_filename: ansible_rsa
 
 #VM_Disk
@@ -28,3 +27,22 @@ disk_size: 10GiB
 disk_format: cow
 vm_disk_storage_domain: vmstore
 vm_disk_interface: virtio_scsi
+
+#Profiling Server stats folder specifics
+results_root_folder: /home/root/rhhi-test-automation
+folders:
+  - /home/root/rhhi-test-automation
+  - /home/root/rhhi-test-automation/pgbench-results
+  - /home/root/rhhi-test-automation/extras
+  - /home/root/rhhi-test-automation/sysbench-results
+  - /home/root/rhhi-test-automation/fio-results
+  - /home/root/rhhi-test-automation/pgbench-results/hypervisor_stats
+  - /home/root/rhhi-test-automation/pgbench-results/gprofile_stats
+
+#SYSbench specifics
+mysql_root_password: pass@123
+sysbench_table_size: 10000
+sysbench_number_of_table: 10
+
+#Gluster specifics
+gluster_vol_profiling: vmstore

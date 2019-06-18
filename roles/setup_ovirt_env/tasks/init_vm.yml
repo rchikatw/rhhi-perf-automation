@@ -9,8 +9,7 @@
      cluster: "{{template_cluster}}"
      name: "{{vm_name}}"
      cloud_init:
-       user_name: root
-       root_password: "{{root_password}}"
+       root_password: "{{vm_root_password}}"
      cloud_init_persist: true
      cloud_init_nics:
       - nic_name: eth0

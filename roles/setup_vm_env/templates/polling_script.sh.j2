@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+while true;do
+  output=$(pgrep sysbench)
+  #echo $output
+  if [[ -z $output ]] ;then
+    break
+  fi
+  sleep 2
+done
+
+echo "Task accomplished"

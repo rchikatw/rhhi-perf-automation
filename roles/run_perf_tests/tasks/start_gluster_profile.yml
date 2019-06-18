@@ -1,0 +1,7 @@
+---
+- name: Starting gluster vol profiling
+  run_once: true
+  delegate_to: "{{ groups['profiling_server'][0] }}"
+  shell:  'gluster vol profile "{{ gluster_vol_profiling }}" start'
+  ignore_errors: yes
+

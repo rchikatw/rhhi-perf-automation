@@ -1,0 +1,25 @@
+---
+    - import_tasks: record_stats.yml
+      vars:
+        step: pre-runs
+
+    - include_tasks: run_sysbench_test.yml
+      delegate_to: "{{vm_ip}}"
+
+    - import_tasks: polling_sysbench.yml
+      delegate_to: "{{vm_ip}}"
+
+    - import_tasks: kill_stats.yml
+
+    - name: Take a 5 second pause
+      shell: sleep 5
+
+    - import_tasks: clear_cache.yml
+
+    - name: Restarting MySQL to clear the caches
+      delegate_to: "{{vm_ip}}"
+      run_once: true
+      service:
+        name: mysql
+        state: restarted
+...
