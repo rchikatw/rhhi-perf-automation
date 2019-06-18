@@ -7,4 +7,4 @@
     owner: root
     group: root
     mode: 0775
-  with_items: "{{folders}}"
+  with_items: "{{host_folders}}"

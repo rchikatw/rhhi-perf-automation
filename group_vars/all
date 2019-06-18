@@ -30,14 +30,19 @@ vm_disk_interface: virtio_scsi
 
 #Profiling Server stats folder specifics
 results_root_folder: /home/root/rhhi-test-automation
-folders:
+host_folders:
   - /home/root/rhhi-test-automation
-  - /home/root/rhhi-test-automation/pgbench-results
-  - /home/root/rhhi-test-automation/extras
-  - /home/root/rhhi-test-automation/sysbench-results
-  - /home/root/rhhi-test-automation/fio-results
+#  - /home/root/rhhi-test-automation/pgbench-results
+#  - /home/root/rhhi-test-automation/extras
+#  - /home/root/rhhi-test-automation/sysbench-results
+#  - /home/root/rhhi-test-automation/fio-results
   - /home/root/rhhi-test-automation/sysbench-results/hypervisor_stats
   - /home/root/rhhi-test-automation/pgbench-results/gprofile_stats
+
+vm_folders:
+  - /home/root/rhhi-test-automation
+  - /home/root/rhhi-test-automation/extras
+  - /home/root/rhhi-test-automation/sysbench-results
 
 #SYSbench specifics
 mysql_root_password: pass@123
