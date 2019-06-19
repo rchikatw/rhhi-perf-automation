@@ -1,29 +1,30 @@
 
 # Engine specifics
-engine_fqdn: https://rhhi-engine1.redhat.com/ovirt-engine/api
+engine_fqdn: https://rhhi-engine.perf.redhat.com/ovirt-engine/api
 engine_user: admin@internal
-engine_password: test123
+engine_password: redhat123
 
 # Template specifics
 qcow_url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
 #qcow_url: https://templates.ovirt.org/repo/el7.6-base-4.xz
 template_cluster: Default
 #template_name: km-centos7_template
-template_name: CentOS75
+template_name: centos76
 template_memory: 4GiB
 template_cpu: 2
 template_disk_size: 10GiB
 template_disk_storage: vmstore
 
 #VM
-vm_name: km-pgBench-vm
-vm_root_password: redhat123
+vm_name: sysbench-vm
+#vm_root_password: redhat123
+vm_root_password: 123456
 ssh_key_filename: ansible_rsa
 
 #VM_Disk
 vm_disk_name: pgbench-test-disk
 disk_name: /dev/sdb
-disk_size: 10GiB
+disk_size: 80GiB
 disk_format: cow
 vm_disk_storage_domain: vmstore
 vm_disk_interface: virtio_scsi

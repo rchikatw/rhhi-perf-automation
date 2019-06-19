@@ -8,12 +8,5 @@
      template: "{{template_name}}"
      cluster: "{{template_cluster}}"
      name: "{{vm_name}}"
-     cloud_init:
-       root_password: "{{vm_root_password}}"
-     cloud_init_persist: true
-     cloud_init_nics:
-      - nic_name: eth0
-        nic_boot_protocol: dhcp
-        nic_on_boot: true
      state: running
      wait: true
