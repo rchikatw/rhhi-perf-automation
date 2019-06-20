@@ -1,44 +1,79 @@
 ---
 - import_tasks: start_gluster_profile.yml
+  run_once: true
+  tags:
+    - run_perf_tests
 
 - import_tasks: get_and_save_gprofile_results.yml
+  run_once: true
   vars:
     step: pre-init-db
+  tags:
+    - run_perf_tests
+
 
 - import_tasks: record_stats.yml
   vars:
     step: init-db
+  tags:
+    - test-stat
+    - run_perf_tests
 
 - import_tasks: record_db_populate_time.yml
+  run_once: true
   vars:
     step: start
+  tags:
+    - run_perf_tests
 
 - import_tasks: setup_sysbench_db.yml
   delegate_to: "{{vm_ip}}"
+  run_once: true
+  tags:
+    - run_perf_tests
 
 - import_tasks: record_db_populate_time.yml
+  run_once: true
   vars:
     step: stop
+  tags:
+    - run_perf_tests
 
 - import_tasks: kill_stats.yml
+  tags:
+    - stop_task
+    - run_perf_tests
 
 - import_tasks: get_and_save_gprofile_results.yml
+  run_once: true
   vars:
     step: post-init-db
+  tags:
+    - run_perf_tests
 
 - import_tasks: record_stats.yml
   vars:
     step: sysbench-run
+  tags:
+    - run_perf_tests
 
 - include_tasks: sysbench-runs.yml thread_count="{{ item }}"
+  run_once: true
   delegate_to: "{{vm_ip}}"
   with_items:
       - [10,20,40,80,120,140]
+  tags:
+    - run_perf_tests
 
 - import_tasks: get_and_save_gprofile_results.yml
+  run_once: true
   vars:
     step: post-sysbench-runs
+  tags:
+    - run_perf_tests
 
 
 - import_tasks:  kill_stats.yml
+  tags:
+    - run_perf_tests
 

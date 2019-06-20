@@ -4,7 +4,5 @@ tendrl[14:16].lab.eng.blr.redhat.com
 [profiling_server]
 #rhsdev-grafton4.lab.eng.blr.redhat.com
 tendrl14.lab.eng.blr.redhat.com
-[vm]
-10.70.42.214
 [all:vars]
 

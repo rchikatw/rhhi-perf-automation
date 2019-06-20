@@ -6,20 +6,28 @@
 #  delegate_to: "{{vm_ip}}"
 
 - import_tasks: setup_host_stat_collection_env.yml
+  tags:
+    - setup_vm_env
 
 - name: Send  the ssh key from local to vm
   shell: "sshpass -p \"{{vm_root_password}}\" ssh-copy-id -o StrictHostKeyChecking=no -i ~/.ssh/{{ssh_key_filename}}.pub  \"root@{{vm_ip}}\""
   delegate_to: 127.0.0.1
   become: false
+  run_once: true
   register: ssh_copy_id_execution
   failed_when: ssh_copy_id_execution.rc != 0
   tags:
     - set_local_to_vm_ssh
+    - setup_vm_env
 
 - import_tasks: setup_sysbench_vm.yml
+  run_once: true
   delegate_to: "{{vm_ip}}"
+  tags:
+    - setup_vm_env
 
 - name: Setup  stats collection folder
+  run_once: true
   delegate_to: "{{vm_ip}}"
   file:
     path: "{{ item }}"
@@ -28,10 +36,15 @@
     group: root
     mode: 0775
   with_items: "{{vm_folders}}"
+  tags:
+    - setup_vm_env
 
 
 - name: Copy Sysbench Polling Script
+  run_once: true
   delegate_to: "{{ vm_ip}}"
   template:
     src: polling_script.sh.j2
     dest: "{{results_root_folder}}/extras/polling_script.sh"
+  tags:
+    - setup_vm_env

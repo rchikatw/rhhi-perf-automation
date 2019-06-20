@@ -8,3 +8,5 @@
     group: root
     mode: 0775
   with_items: "{{host_folders}}"
+  tags:
+    - set_hosts_collection_folders

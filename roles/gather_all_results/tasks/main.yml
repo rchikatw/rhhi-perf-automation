@@ -1,5 +1,7 @@
 ---
 - name: Gather from vm to profiling host
+  run_once: true
+  delegate_to: "{{groups['profiling_server'][0]}}"
   shell: "scp  \"root@{{vm_ip}}\":\"{{results_root_folder}}\" \"{{results_root_folder}}\"/vm_results/"
   tags:
     - gather_from_vm

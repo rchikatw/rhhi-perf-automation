@@ -1,11 +1,11 @@
 ---
  - name: Connecting to Ovirt
-   hosts: profiling_server
+   hosts: all
    remote_user: root
    become: true
 
    vars_files:
-     - group_vars/all
+     - group_vars/all-rhhi-perf
    pre_tasks:
      - name: Obtain SSO token
        ovirt_auth:
@@ -13,8 +13,10 @@
          insecure: yes
          username: "{{engine_user}}"
          password: "{{engine_password}}"
+       run_once: true
        tags:
          - always
+         - test_ovirt_auth
 
    roles:
 #     - ovirt.image-template

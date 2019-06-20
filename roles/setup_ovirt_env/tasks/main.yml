@@ -1,6 +1,21 @@
 ---
 #- import_tasks: create_template.yml
 - import_tasks: init_vm.yml
+  run_once: true
+  tags:
+    - setup_ovirt_env
+
 - import_tasks: fetch_ip.yml
+  run_once: true
+  tags:
+    - setup_ovirt_env
+
 - import_tasks: set_local.yml
+  run_once: true
+  tags:
+    - setup_ovirt_env
+
 - import_tasks: add_disk.yml
+  run_once: true
+  tags:
+    - setup_ovirt_env
