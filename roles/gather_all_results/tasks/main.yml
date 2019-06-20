@@ -1,7 +1,16 @@
 ---
 - name: Gather from vm to profiling host
   run_once: true
-  delegate_to: "{{groups['profiling_server'][0]}}"
-  shell: "scp  \"root@{{vm_ip}}\":\"{{results_root_folder}}\" \"{{results_root_folder}}\"/vm_results/"
+  shell: "scp -r \"root@{{vm_ip}}\":\"{{results_root_folder}}\"/sysbench-results \"{{results_root_folder}}\"/vm_results/"
   tags:
     - gather_from_vm
+
+- name: Gather hosts stats from other hosts
+  copy:
+    src: "{{results_root_folder}}/sysbench-results/hypervisor_stats-{{inventory_hostname}}"
+    dest: "{{results_root_folder}}/sysbench-results"
+    remote_src: yes
+    mode: preserve
+  when: "'profiling_server' not in group_names"
+  tags:
+    - gather_from_hosts

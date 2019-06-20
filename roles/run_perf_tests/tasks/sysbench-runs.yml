@@ -4,10 +4,12 @@
 #        step: pre-runs
 
     - name: run test
+      delegate_to: "{{vm_ip}}"
       include_role:
         name: run_sysbench_test
 
     - name: Polling sysbench test
+      delegate_to: "{{vm_ip}}"
       include_role:
         name: polling_sysbench
 

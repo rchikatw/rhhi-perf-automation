@@ -5,7 +5,7 @@
    become: true
 
    vars_files:
-     - group_vars/all-rhhi-perf
+     - group_vars/all-rhhi-engine1
    pre_tasks:
      - name: Obtain SSO token
        ovirt_auth:
@@ -23,3 +23,4 @@
      - setup_ovirt_env
      - setup_vm_env
      - run_perf_tests
+     - gather_all_results

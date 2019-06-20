@@ -59,7 +59,6 @@
 
 - include_tasks: sysbench-runs.yml thread_count="{{ item }}"
   run_once: true
-  delegate_to: "{{vm_ip}}"
   with_items:
       - [10,20,40,80,120,140]
   tags:
