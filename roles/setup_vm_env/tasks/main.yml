@@ -7,6 +7,15 @@
 
 - import_tasks: setup_host_stat_collection_env.yml
 
+- name: Send  the ssh key from local to vm
+  shell: "sshpass -p \"{{vm_root_password}}\" ssh-copy-id -o StrictHostKeyChecking=no -i ~/.ssh/{{ssh_key_filename}}.pub  \"root@{{vm_ip}}\""
+  delegate_to: 127.0.0.1
+  become: false
+  register: ssh_copy_id_execution
+  failed_when: ssh_copy_id_execution.rc != 0
+  tags:
+    - set_local_to_vm_ssh
+
 - import_tasks: setup_sysbench_vm.yml
   delegate_to: "{{vm_ip}}"
 
@@ -18,7 +27,7 @@
     owner: root
     group: root
     mode: 0775
-  with_items: "{{folders}}"
+  with_items: "{{vm_folders}}"
 
 
 - name: Copy Sysbench Polling Script

@@ -19,11 +19,11 @@ template_disk_storage: vmstore
 vm_name: sysbench-vm
 #vm_root_password: redhat123
 vm_root_password: 123456
-ssh_key_filename: ansible_rsa
+ssh_key_filename: id_rsa
 
 #VM_Disk
-vm_disk_name: pgbench-test-disk
-disk_name: /dev/sdb
+vm_disk_name: sysbench-test-disk
+disk_name: /dev/sda
 disk_size: 80GiB
 disk_format: cow
 vm_disk_storage_domain: vmstore
@@ -38,7 +38,7 @@ host_folders:
 #  - /home/root/rhhi-test-automation/sysbench-results
 #  - /home/root/rhhi-test-automation/fio-results
   - /home/root/rhhi-test-automation/sysbench-results/hypervisor_stats
-  - /home/root/rhhi-test-automation/pgbench-results/gprofile_stats
+  - /home/root/rhhi-test-automation/sysbench-results/gprofile_stats
 
 vm_folders:
   - /home/root/rhhi-test-automation

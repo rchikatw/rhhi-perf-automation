@@ -1,0 +1,5 @@
+---
+- name: Gather from vm to profiling host
+  shell: "scp  \"root@{{vm_ip}}\":\"{{results_root_folder}}\" \"{{results_root_folder}}\"/vm_results/"
+  tags:
+    - gather_from_vm

@@ -2,5 +2,5 @@
 - name: Save gprofile results
   run_once: true
   delegate_to: "{{ groups['profiling_server'][0] }}"
-  shell:  'gluster vol profile "{{ gluster_vol_profiling }}" info > "{{ results_root_folder }}"/pgbench-results/gprofile_stats/gprofile."{{ step }}".txt'
+  shell:  'gluster vol profile "{{ gluster_vol_profiling }}" info > "{{ results_root_folder }}"/sysbench-results/gprofile_stats/gprofile."{{ step }}".txt'
 ...
