@@ -1,0 +1,48 @@
+
+# Engine specifics
+engine_fqdn: https://rhhi-engine1.redhat.com/ovirt-engine/api
+engine_user: admin@internal
+engine_password: test123
+
+# Template specifics
+qcow_url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
+#qcow_url: https://templates.ovirt.org/repo/el7.6-base-4.xz
+template_cluster: Default
+template_name: CentOS75
+template_memory: 4GiB
+template_cpu: 2
+template_disk_size: 10GiB
+template_disk_storage: vmstore
+
+#VM
+vm_name: sysbench-vm
+vm_root_password: redhat123
+ssh_key_filename: id_rsa
+
+#VM_Disk
+vm_disk_name: sysbench-test-disk
+disk_name: /dev/sdc
+disk_size: 80GiB
+disk_format: cow
+vm_disk_storage_domain: vmstore
+vm_disk_interface: virtio_scsi
+
+#Profiling Server stats folder specifics
+results_root_folder: /home/root/rhhi-test-automation
+host_folders:
+  - /home/root/rhhi-test-automation
+  - /home/root/rhhi-test-automation/sysbench-results/hypervisor_stats-{{inventory_hostname}}
+  - /home/root/rhhi-test-automation/sysbench-results/gprofile_stats
+
+vm_folders:
+  - /home/root/rhhi-test-automation
+  - /home/root/rhhi-test-automation/extras
+  - /home/root/rhhi-test-automation/sysbench-results
+
+#SYSbench specifics
+mysql_root_password: pass@123
+sysbench_table_size: 10
+sysbench_number_of_table: 5
+
+#Gluster specifics
+gluster_vol_profiling: vmstore
