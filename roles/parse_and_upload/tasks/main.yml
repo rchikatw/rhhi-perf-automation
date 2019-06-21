@@ -16,6 +16,7 @@
     python ./upload_to_gsheets.py ./results"{{results_suffix}}"/vm_results/sysbench-result.csv "{{results_suffix}}"
   tags:
     - to_sheets
+    - parse_and_upload
   register: spreadsheet_url
 
 - name: Get Spreadsheet URL
@@ -25,6 +26,7 @@
   tags:
     - to_sheets
     - get_sheet_url
+    - parse_and_upload
   debug:
     msg : "{{spreadsheet_url.stdout}}"
 
@@ -38,6 +40,7 @@
     format: zip
   tags:
     - zip_results_folder
+    - parse_and_upload
 
 - name: Upload to Gdrive
   delegate_to: 127.0.0.1
@@ -47,3 +50,4 @@
     python ./upload_to_drive.py ./results"{{results_suffix}}".zip "{{results_suffix}}"
   tags:
     - to_gdrive
+    - parse_and_upload
