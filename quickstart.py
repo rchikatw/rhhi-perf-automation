@@ -9,7 +9,9 @@ from google.auth.transport.requests import Request
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-
+"""
+cat sysbench-results.out | egrep " cat|threads:|transactions|tps|read/write|min:|avg:|max:" | tr -d "\n" | sed 's/Number of threads: /\n/g' | sed 's/\[/\n/g' | sed 's/[A-Za-z\/]\{1,\}://g'| sed 's/ \.//g' | sed -e 's/read\/write//g'  -e 's/per sec.)//g' -e 's/ms//g' -e 's/(//g' -e 's/^.*cat //g' | sed 's/ \{1,\}/,/g' > sysbench.csv
+"""
 
 def main():
     creds = None
@@ -43,7 +45,7 @@ def main():
     print(response.get('spreadsheetUrl'))
 
     values = [
-        ['threads','transactions','deadlocks','read/write','min','avg','max','percentile']
+        ['threads','transactions','tps','min','avg','max']
     ]
 
     body = {
@@ -57,8 +59,8 @@ def main():
     with open(sys.argv[1]) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
-                data_values.append(row)
-                line_count = line_count +1
+            data_values.append(row)
+            line_count = line_count +1
 
     body ={
        'values': data_values
