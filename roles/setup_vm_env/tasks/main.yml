@@ -38,6 +38,7 @@
   with_items: "{{vm_folders}}"
   tags:
     - setup_vm_env
+    - setup_vm_stats_dir
 
 
 - name: Copy Sysbench Polling Script

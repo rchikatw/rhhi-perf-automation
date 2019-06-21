@@ -9,4 +9,5 @@
     storage_domain: "{{vm_disk_storage_domain}}"
     interface: "{{vm_disk_interface}}"
     state: attached
+    activate: yes
     wait: true
