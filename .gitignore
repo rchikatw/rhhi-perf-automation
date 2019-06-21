@@ -2,7 +2,8 @@
 *.pyc
 *.log
 *.retry
-token.pickle
+*.pickle
 sysbench-results/*
 gsheets_credentials.json
 gdrive_credentials.json
+results*/
