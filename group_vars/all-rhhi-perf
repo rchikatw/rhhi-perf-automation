@@ -46,3 +46,6 @@ sysbench_number_of_table: 5
 
 #Gluster specifics
 gluster_vol_profiling: data
+
+#Local results specifics
+results_suffix: -rhgs3.5-rhv-4.3
