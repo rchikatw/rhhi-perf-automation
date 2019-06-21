@@ -35,7 +35,7 @@ def main():
     st = datetime.datetime.fromtimestamp(ts).strftime('%d-%m-%H:%M')
 
     file_metadata = {
-        'name': 'RHHI-perf-results' + sys.argv[2] + st,
+        'name': 'RHHI-perf-results' + sys.argv[2] + '-' +st,
         'mimeType': 'application/vnd.google-apps.folder'
     }
     file = service.files().create(body=file_metadata).execute()
