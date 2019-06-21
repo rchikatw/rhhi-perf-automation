@@ -24,7 +24,7 @@ vm_disk_name: sysbench-test-disk
 disk_name: /dev/sda
 disk_size: 80GiB
 disk_format: cow
-vm_disk_storage_domain: vmstore
+vm_disk_storage_domain: data
 vm_disk_interface: virtio_scsi
 
 #Profiling Server stats folder specifics
@@ -45,4 +45,4 @@ sysbench_table_size: 10
 sysbench_number_of_table: 5
 
 #Gluster specifics
-gluster_vol_profiling: vmstore
+gluster_vol_profiling: data

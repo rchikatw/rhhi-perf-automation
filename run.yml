@@ -5,7 +5,7 @@
    become: true
 
    vars_files:
-     - group_vars/all-rhhi-engine1
+     - group_vars/all-rhhi-perf
    pre_tasks:
      - name: Obtain SSO token
        ovirt_auth:

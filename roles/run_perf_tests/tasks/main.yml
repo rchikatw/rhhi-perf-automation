@@ -57,8 +57,14 @@
   tags:
     - run_perf_tests
 
-- include_tasks: sysbench-runs.yml thread_count="{{ item }}"
+- include_tasks: 
+    file: sysbench-runs.yml
+    apply:
+      tags:
+        - run_included
   run_once: true
+  vars:
+    thread_count: "{{item}}"
   with_items:
       - [10,20,40,80,120,140]
   tags:

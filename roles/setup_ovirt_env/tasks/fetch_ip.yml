@@ -1,12 +1,12 @@
 ---
  - name: Wait for VMs IPv4
-   ovirt_vms_facts:
+   ovirt_vm_facts:
      auth: "{{ ovirt_auth }}"
      pattern: "name={{ vm_name }}"
      fetch_nested: true
      nested_attributes: ips
    until: "ovirt_vms | ovirtvmipv4 | length > 0"
-   retries: 15
+   retries: 25
    delay: 10
 
  - name: Set Ip of the VM

@@ -3,7 +3,7 @@
      msg : "{{vm_name}}"
 
  - name: Initialize Pg-bench vm
-   ovirt_vms:
+   ovirt_vm:
      auth: "{{ ovirt_auth }}"
      template: "{{template_name}}"
      cluster: "{{template_cluster}}"

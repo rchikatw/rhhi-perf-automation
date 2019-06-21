@@ -4,6 +4,7 @@
   shell: "scp -r \"root@{{vm_ip}}\":\"{{results_root_folder}}\"/sysbench-results \"{{results_root_folder}}\"/vm_results/"
   tags:
     - gather_from_vm
+    - gather_all_results
 
 - name: Gather hosts stats from other hosts
   copy:
@@ -14,3 +15,4 @@
   when: "'profiling_server' not in group_names"
   tags:
     - gather_from_hosts
+    - gather_all_results

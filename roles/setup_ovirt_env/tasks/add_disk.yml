@@ -1,6 +1,6 @@
 ---
 - name: Add disk to vm
-  ovirt_disks:
+  ovirt_disk:
     auth: "{{ovirt_auth}}"
     name: "{{vm_disk_name}}"
     vm_name: "{{vm_name}}"
