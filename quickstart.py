@@ -2,6 +2,7 @@ from __future__ import print_function
 import pickle
 import os.path
 import csv
+import sys
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -53,7 +54,7 @@ def main():
 
     data_values=[]
     line_count = 0
-    with open('sysbench-results.csv') as csv_file:
+    with open(sys.argv[1]) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
                 data_values.append(row)
@@ -71,4 +72,6 @@ def main():
 
 
 if __name__ == '__main__':
+    print ("Ref docs for pre-requisites: https://developers.google.com/sheets/api/quickstart/python")
+    print("Usage: python quickstart.py <input file path>")
     main()
