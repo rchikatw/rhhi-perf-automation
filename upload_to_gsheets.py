@@ -18,8 +18,8 @@ def main():
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
+    if os.path.exists('upload_gsheets_token.pickle'):
+        with open('upload_gsheets_token.pickle', 'rb') as token:
             creds = pickle.load(token)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
@@ -27,21 +27,21 @@ def main():
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
+                'gsheets_credentials.json', SCOPES)
             creds = flow.run_local_server()
         # Save the credentials for the next run
-        with open('token.pickle', 'wb') as token:
+        with open('upload_gsheets_token.pickle', 'wb') as token:
             pickle.dump(creds, token)
 
     service = build('sheets', 'v4', credentials=creds)
     spreadsheet_body = {
-        'properties' : {
-            'title' : "RHHI-Sysbench-Results"
+        'properties': {
+            'title': "RHHI-Sysbench-Results"
         }
     }
     request = service.spreadsheets().create(body=spreadsheet_body,fields='spreadsheetId,spreadsheetUrl')
     response = request.execute()
-    print(response.get('spreadsheetId'))
+    # print(response.get('spreadsheetId'))
     print(response.get('spreadsheetUrl'))
 
     values = [
@@ -68,12 +68,12 @@ def main():
     result = service.spreadsheets().values().append(
         spreadsheetId=response.get('spreadsheetId'),
         valueInputOption="USER_ENTERED", body=body, range="Sheet1!A2:H").execute()
-    print('{0} cells appended.'.format(result \
-                                       .get('updates') \
-                                       .get('updatedCells')))
+    # print('{0} cells appended.'.format(result \
+    #                                    .get('updates') \
+    #                                    .get('updatedCells')))
 
 
 if __name__ == '__main__':
-    print ("Ref docs for pre-requisites: https://developers.google.com/sheets/api/quickstart/python")
-    print("Usage: python quickstart.py <input file path>")
+    # print ("Ref docs for pre-requisites: https://developers.google.com/sheets/api/quickstart/python")
+    # print("Usage: python quickstart.py <input file path>")
     main()

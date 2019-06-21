@@ -4,6 +4,46 @@
   become: false
   run_once: true
   shell: |
-    cat "./results/vm_results/sysbench-result.out" | egrep " cat|threads:|transactions|tps|read/write|min:|avg:|max:" | tr -d "\n" | sed 's/Number of threads: /\n/g' | sed 's/\[/\n/g' | sed 's/[A-Za-z\/]\{1,\}://g'| sed 's/ \.//g' | sed -e 's/read\/write//g'  -e 's/per sec.)//g' -e 's/ms//g' -e 's/(//g' -e 's/^.*cat //g' | sed 's/ \{1,\}/,/g' > ./results/vm_results/sysbench-result.csv
+    cat "./results{{results_suffix}}/vm_results/sysbench-result.out" | egrep " cat|threads:|transactions|tps|read/write|min:|avg:|max:" | tr -d "\n" | sed 's/Number of threads: /\n/g' | sed 's/\[/\n/g' | sed 's/[A-Za-z\/]\{1,\}://g'| sed 's/ \.//g' | sed -e 's/read\/write//g'  -e 's/per sec.)//g' -e 's/ms//g' -e 's/(//g' -e 's/^.*cat //g' | sed 's/ \{1,\}/,/g' > ./results{{results_suffix}}/vm_results/sysbench-result.csv
   tags:
     - to_csv
+
+- name: Upload spreadsheet
+  delegate_to: 127.0.0.1
+  become: false
+  run_once: true
+  shell: |
+    python ./upload_to_gsheets.py ./results"{{results_suffix}}"/vm_results/sysbench-result.csv "{{results_suffix}}"
+  tags:
+    - to_sheets
+  register: spreadsheet_url
+
+- name: Get Spreadsheet URL
+  delegate_to: 127.0.0.1
+  become: false
+  run_once: true
+  tags:
+    - to_sheets
+    - get_sheet_url
+  debug:
+    msg : "{{spreadsheet_url.stdout}}"
+
+- name: ZIP results folder
+  delegate_to: 127.0.0.1
+  become: false
+  run_once: true
+  archive:
+    path: "./results{{results_suffix}}"
+    dest: "./results{{results_suffix}}.zip"
+    format: zip
+  tags:
+    - zip_results_folder
+
+- name: Upload to Gdrive
+  delegate_to: 127.0.0.1
+  become: false
+  run_once: true
+  shell: |
+    python ./upload_to_drive.py ./results"{{results_suffix}}".zip "{{results_suffix}}"
+  tags:
+    - to_gdrive
