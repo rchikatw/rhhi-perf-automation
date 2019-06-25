@@ -2,7 +2,7 @@
  - name: Wait for VMs IPv4
    ovirt_vm_facts:
      auth: "{{ ovirt_auth }}"
-     pattern: "name={{ vm_name }}"
+     pattern: "name={{ vm_name_from_list }}"
      fetch_nested: true
      nested_attributes: ips
    until: "ovirt_vms | ovirtvmipv4 | length > 0"
@@ -11,8 +11,8 @@
 
  - name: Set Ip of the VM
    set_fact:
-     vm_ip: "{{ ovirt_vms | ovirtvmipv4}}"
+     vm_ips: "{{vm_ips + [ovirt_vms | ovirtvmipv4]}}"
 
  - name: Debugging
    debug:
-     msg: Ip of vm {{vm_ip}}
+     msg: "Ip of vm {{ovirt_vms | ovirtvmipv4}}"

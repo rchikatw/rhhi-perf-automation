@@ -1,0 +1,80 @@
+---
+- name: Setting empty array
+  run_once: true
+  set_fact:
+    vm_names: []
+    vm_ips: []
+  tags:
+    - init_vms_for_fio
+
+- name: Initialize  for FIO
+  run_once: true
+  include_tasks:
+    file: setup_multiple_vms.yml
+    apply:
+      tags:
+        - run_init_vm_included
+  loop: "{{groups['rhhihosts']}}"
+  loop_control:
+    loop_var: host_name
+    index_var: host_index
+  vars:
+    host_for_vm: "{{host_name}}"
+  tags:
+    - init_vms_for_fio
+
+- name: Debugging
+  debug:
+    msg : "{{vm_names}} + {{vm_ips}}"
+  tags:
+    - debug_vm_name_ips
+
+- name: Fetch and save ip of multiple_vms
+  run_once: true
+  include_tasks:
+    file: get_multiple_vm_ips.yml
+    apply:
+      tags:
+      - run_get_vm_ip_included
+  loop: "{{vm_names}}"
+  loop_control:
+    loop_var: vm_name_from_list
+  tags:
+   - fetch_vm_ip_for_fio
+
+
+- name: Debugging
+  run_once: true
+  debug:
+    msg : "list of VM ips: {{vm_ips}}"
+  tags:
+    - debug_vm_name_ips
+
+
+- name: Set local for vms
+  run_once: true
+  include_tasks:
+    file: set_local.yml
+    apply:
+      tags:
+      - run_set_local_included
+  loop: "{{vm_ips}}"
+  loop_control:
+    loop_var: vm_ip
+  tags:
+    - set_local_fio
+
+- name: Set local to vms ssh
+  delegate_to: 127.0.0.1
+  become: false
+  run_once: true
+  shell: "sshpass -p \"{{vm_root_password}}\" ssh-copy-id -o StrictHostKeyChecking=no  \"root@{{vm_ip}}\""
+  loop: "{{vm_ips}}"
+  loop_control:
+    loop_var: vm_ip
+  tags:
+  - run_local_to_vm_included
+
+
+
+

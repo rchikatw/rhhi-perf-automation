@@ -49,3 +49,10 @@ gluster_vol_profiling: vmstore
 
 #Local results specifics
 results_suffix: -rhgs3.5-rhv-4.3
+
+# FIO specifics
+total_no_of_vms_fio_per_host:
+  - 1
+#  - 2
+vm_name_prefix: fio
+fio_rpm_src: ftp://ftp.pbone.net/mirror/apt.sw.be/redhat/el7/en/x86_64/rpmforge/RPMS/fio-2.1.7-1.el7.rf.x86_64.rpm

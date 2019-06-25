@@ -1,0 +1,23 @@
+ - name: Initialize FIO-vm
+   ovirt_vm:
+     auth: "{{ ovirt_auth }}"
+     template: "{{template_name}}"
+     cluster: "{{template_cluster}}"
+     name: "{{vm_name_prefix}}-{{host_name}}-{{vm_index + 1}}"
+     host: "{{host_for_vm}}"
+     state: running
+     wait: true
+   loop: "{{total_no_of_vms_fio_per_host}}"
+   loop_control:
+     index_var: vm_index
+   when: total_no_of_vms_fio_per_host is defined
+   register: vm_return
+
+ - name: Debug
+   debug:
+     msg: "vm name: {{vm_return.results[0].invocation.module_args.name}}"
+
+ - name: Set fact
+   set_fact:
+     vm_names: "{{vm_names + [vm_return.results[0].invocation.module_args.name]}}"
+
