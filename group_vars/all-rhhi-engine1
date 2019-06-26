@@ -54,11 +54,12 @@ results_suffix: -rhgs3.5-rhv-4.3
 total_no_of_vms_fio_per_host:
   - 1
   - 2
+
 vm_name_prefix: fio
 fio_randrw_70_30_folder: /perf1/iotest
 fio_randrw_70_30_size: 16g
 fio_randrw_70_30_disk_name: /dev/sdc
-size: 20g
-format: cow
-storage_domain: vmstore
-interface: virtio_scsi
+fio_randrw_70_30_size: 20g
+fio_randrw_70_30_format: cow
+fio_randrw_70_30_storage_domain: vmstore
+fio_randrw_70_30_interface: virtio_scsi
