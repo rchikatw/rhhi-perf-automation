@@ -2,7 +2,7 @@
  - name: Wait for VMs IPv4
    ovirt_vm_facts:
      auth: "{{ ovirt_auth }}"
-     pattern: "name={{ vm_name_from_list }}"
+     pattern: "id={{ vm_name_from_list }}"
      fetch_nested: true
      nested_attributes: ips
    until: "ovirt_vms | ovirtvmipv4 | length > 0"

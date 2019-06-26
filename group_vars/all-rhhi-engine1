@@ -53,6 +53,12 @@ results_suffix: -rhgs3.5-rhv-4.3
 # FIO specifics
 total_no_of_vms_fio_per_host:
   - 1
-#  - 2
+  - 2
 vm_name_prefix: fio
-fio_rpm_src: ftp://ftp.pbone.net/mirror/apt.sw.be/redhat/el7/en/x86_64/rpmforge/RPMS/fio-2.1.7-1.el7.rf.x86_64.rpm
+fio_randrw_70_30_folder: /perf1/iotest
+fio_randrw_70_30_size: 16g
+fio_randrw_70_30_disk_name: /dev/sdc
+size: 20g
+format: cow
+storage_domain: vmstore
+interface: virtio_scsi

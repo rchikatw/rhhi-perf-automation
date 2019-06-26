@@ -4,8 +4,10 @@
   set_fact:
     vm_names: []
     vm_ips: []
+    vm_name_counter: 1
   tags:
     - init_vms_for_fio
+    - fio_tools
 
 - name: Initialize  for FIO
   run_once: true
@@ -17,17 +19,18 @@
   loop: "{{groups['rhhihosts']}}"
   loop_control:
     loop_var: host_name
-    index_var: host_index
   vars:
     host_for_vm: "{{host_name}}"
   tags:
     - init_vms_for_fio
+    - fio_tools
 
 - name: Debugging
   debug:
     msg : "{{vm_names}} + {{vm_ips}}"
   tags:
     - debug_vm_name_ips
+    - fio_tools
 
 - name: Fetch and save ip of multiple_vms
   run_once: true
@@ -41,6 +44,7 @@
     loop_var: vm_name_from_list
   tags:
    - fetch_vm_ip_for_fio
+   - fio_tools
 
 
 - name: Debugging
@@ -49,6 +53,7 @@
     msg : "list of VM ips: {{vm_ips}}"
   tags:
     - debug_vm_name_ips
+    - fio_tools
 
 
 - name: Set local for vms
@@ -63,6 +68,7 @@
     loop_var: vm_ip
   tags:
     - set_local_fio
+    - fio_tools
 
 - name: Set local to vms ssh
   delegate_to: 127.0.0.1
@@ -74,6 +80,57 @@
     loop_var: vm_ip
   tags:
   - run_local_to_vm_included
+  - fio_tools
+
+- name: Setup fio vms
+  run_once: true
+  include_tasks:
+    file: setup_fio_vms.yml
+    apply:
+      tags:
+       - run_set_fio_vms_included
+  with_items: "{{vm_ips}}"
+  tags:
+    - set_fio_vms
+    - fio_tools
+
+- name: Generate run_workload.yml
+  run_once: true
+  delegate_to: 127.0.0.1
+  become: false
+  template:
+    src: run_workload.yml.j2
+    dest: run_workload.yml
+    force: yes
+    mode: '0644'
+  tags:
+    - generate_run_workload_yml
+    - fio_tools
+
+- name: Generate randrw7030.yml
+  run_once: true
+  delegate_to: 127.0.0.1
+  become: false
+  template:
+    src: randrw7030.yml.j2
+    dest: randrw7030.yml
+    force: yes
+    mode: '0644'
+  tags:
+    - generate_randrw7030_yml
+    - fio_tools
+
+
+- name: Run fio test
+  delegate_to: 127.0.0.1
+  run_once: true
+  become: false
+  shell: |
+    "run_workload.sh -j randrw7030.job -t {{gluster_vol_profiling}} -r 120 -q 8 -f run_workload.yml"
+  tags:
+    - fio_tools
+    - run_fio
+
 
 
 

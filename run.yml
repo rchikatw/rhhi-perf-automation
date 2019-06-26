@@ -19,7 +19,6 @@
          - test_ovirt_auth
 
    roles:
-#     - ovirt.image-template
      - setup_ovirt_env
      - setup_vm_env
      - run_perf_tests

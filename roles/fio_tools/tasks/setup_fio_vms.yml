@@ -1,0 +1,72 @@
+---
+- name: copy fio rpm
+  delegate_to: 127.0.0.1
+  become: false
+  shell: " scp ./extras/fio-2.1.7-1.el7.rf.x86_64.rpm root@{{item}}:/tmp/fio-server.rpm"
+
+- name: Install FIO on vms
+  delegate_to: "{{item}}"
+  yum:
+    name: /tmp/fio-server.rpm
+    state: present
+
+- name: Copy systemd file
+  delegate_to: "{{item}}"
+  template:
+    src: fio-server.service.j2
+    dest: /etc/systemd/fio-server.service
+
+- name: Enable  systemd
+  delegate_to: "{{item}}"
+  systemd:
+    enabled: yes
+    name: /etc/systemd/fio-server.service
+
+- name: Start fio-server.service
+  delegate_to: "{{item}}"
+  systemd:
+    state: started
+    name: fio-server.service
+
+- name: Allow firewall for port 5432
+  delegate_to: "{{item}}"
+  firewalld:
+    port: 8765/tcp
+    permanent: yes
+    zone: public
+    state: enabled
+
+- name: Restart firewalld
+  delegate_to: "{{item}}"
+  service:
+    name: firewalld
+    state: restarted
+
+- name: Creating XFS filesystem on the data disk
+  delegate_to: "{{item}}"
+  filesystem:
+    fstype: xfs
+    dev: "{{ fio_randrw_70_30_disk_name }}"
+
+- name: Create Perf1 Directory
+  delegate_to: "{{item}}"
+  file:
+    path: "{{fio_randrw_70_30_folder}}"
+    state: directory
+
+
+- name: Adding an entry to /etc/fstab for the data disk
+  delegate_to: "{{item}}"
+  mount:
+    path: "{{fio_randrw_70_30_folder}}"
+    src: "{{ fio_randrw_70_30_disk_name }}"
+    fstype: xfs
+    state: present
+
+- name: Mounting the data disk on the mount point
+  delegate_to: "{{item}}"
+  command: mount -a
+  remote_user: root
+  become: yes
+  become_method: sudo
+

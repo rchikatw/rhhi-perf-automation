@@ -1,0 +1,32 @@
+ - name: Initialize FIO-vm
+   ovirt_vm:
+     auth: "{{ ovirt_auth }}"
+     template: "{{template_name}}"
+     cluster: "{{template_cluster}}"
+     name: "{{vm_name_prefix}}-{{vm_name_counter}}"
+     host: "{{host_for_vm}}"
+     state: running
+     wait: true
+   register: vm_return
+
+ - name: Debug
+   debug:
+     msg: "vm name: {{vm_return.id}}"
+
+- name: Add disk to vm
+  ovirt_disk:
+    auth: "{{ovirt_auth}}"
+    name: "{{fio_randrw_70_30_disk_name}}"
+    vm_name: "{{vm_name_prefix}}-{{vm_name_counter}}"
+    size: "{{fio_randrw_70_30_disk_size}}"
+    format: "{{fio_randrw_70_30_disk_format}}"
+    storage_domain: "{{fio_randrw_70_30_vm_disk_storage_domain}}"
+    interface: "{{fio_randrw_70_30_vm_disk_interface}}"
+    state: attached
+    activate: yes
+    wait: true
+
+ - name: Set fact
+   set_fact:
+     vm_names: "{{vm_names + [vm_return.id]}}"
+     vm_name_counter: "{{vm_name_counter | int + 1}}"
