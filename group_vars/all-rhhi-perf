@@ -49,3 +49,17 @@ gluster_vol_profiling: data
 
 #Local results specifics
 results_suffix: -rhgs3.5-rhv-4.3
+
+# FIO specifics
+total_no_of_vms_fio_per_host:
+  - 1
+# - 2
+vm_name_prefix: fio
+fio_randrw_70_30_folder: /perf1/iotest
+fio_randrw_70_30_disk_size: 4g
+fio_randrw_70_30_disk_name: /dev/sdc
+fio_randrw_70_30_vm_disk_storage_domain: vmstore
+fio_randrw_70_30_vm_disk_interface: virtio_scsi
+fio_randrw_70_30_disk_format: cow
+fio_randrw_70_30_vm_disk_size: 16Gib
+fio_randrw_70_30_disk_attached_name: fio_tools

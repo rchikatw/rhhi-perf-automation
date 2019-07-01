@@ -1,0 +1,15 @@
+---
+- name: Gather hosts stats from other hosts
+  shell: " scp -r {{results_root_folder}}/fio_results/hypervisor_stats-{{inventory_hostname}} root@{{groups['profiling_server'][0]}}:{{results_root_folder}}/fio_results/"
+  when: "'profiling_server' not in group_names"
+  tags:
+    - gather_from_hosts_fio_results
+    - gather_all_results_fio_results
+
+- name: Gather from hosts to local
+  delegate_to: 127.0.0.1
+  run_once: true
+  become: false
+  shell: "scp -r root@{{groups['profiling_server'][0]}}:{{results_root_folder}}/fio_results ./results{{results_suffix}} "
+  tags:
+    - gather_from_prof_serv_to_local_fio_results

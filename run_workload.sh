@@ -7,7 +7,6 @@
 # 1) all vm's are started
 
 # default filenames used by the script
-CFG_FILE=run_workload.yaml
 FIO_TEMPFILE=$(mktemp)
 
 FIO_PORT=8765
@@ -71,7 +70,7 @@ function run_fio {
   done
 
   echo "$(timestamp) running fio stream for ${num_vms} concurrent clients"
-  $CMD_PFX fio ${client_string} --output=${output_file} --output-format=json $FIO_TEMPFILE
+  $CMD_PFX fio ${client_string} --output=${output_file} --output-format=json ${OUTDIR}/fio.job
   echo "$(timestamp) output written to ${output_file}"
 
   if [ "$GETSTATS" ]; then
@@ -244,10 +243,10 @@ while getopts ":j:dst:m:f:q:n:r:o:h" opt; do
 
 done
 
-#if ! [ -e "$CFG_FILE" ]; then
-#  echo "-> Error, config filename provided not found (specify full path?)"
-#  exit 16
-#fi
+if ! [ -e "$CFG_FILE" ]; then
+  echo "-> Error, config filename provided not found (specify full path?)"
+  exit 16
+fi
 
 if [ -z "${OUTDIR}" ]; then
 

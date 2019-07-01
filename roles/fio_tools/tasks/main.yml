@@ -102,7 +102,6 @@
     src: run_workload.yml.j2
     dest: run_workload.yml
     force: yes
-    mode: '0644'
   tags:
     - generate_run_workload_yml
     - fio_tools
@@ -113,11 +112,56 @@
   become: false
   template:
     src: randrw7030.yml.j2
-    dest: randrw7030.yml
+    dest: randrw7030.job
     force: yes
-    mode: '0644'
   tags:
     - generate_randrw7030_yml
+    - fio_tools
+
+- name: Setup  stats collection folder
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+  with_items: "{{host_folders}}"
+  tags:
+    - set_hosts_collection_folders
+    - fio_tools
+
+- import_tasks: record_stats.yml
+  vars:
+    step: fio-tests
+  tags:
+    - fio_tools
+    - record_fio_stat
+
+- name: Starting gluster vol profiling
+  run_once: true
+  delegate_to: "{{ groups['profiling_server'][0] }}"
+  shell:  'gluster vol profile "{{ gluster_vol_profiling }}" start'
+  ignore_errors: yes
+  tags:
+    - fio_tools
+
+- name: Save gprofile results
+  run_once: true
+  delegate_to: "{{ groups['profiling_server'][0] }}"
+  shell:  'gluster vol profile "{{ gluster_vol_profiling }}" info > "{{ results_root_folder }}"/fio_results/gprofile_stats/gprofile."{{ step }}".txt'
+  vars:
+    step: pre_fio
+  tags:
+    - fio_tools
+
+- name: Create local folder
+  delegate_to: 127.0.0.1
+  become: false
+  run_once: true
+  file:
+    path: ./results{{results_suffix}}/fio_results/
+    state: directory
+  tags:
     - fio_tools
 
 
@@ -126,10 +170,40 @@
   run_once: true
   become: false
   shell: |
-    "run_workload.sh -j randrw7030.job -t {{gluster_vol_profiling}} -r 120 -q 8 -f run_workload.yml"
+    /bin/sh ./run_workload.sh -j ./randrw7030.job -t {{gluster_vol_profiling}} -r 120 -q 8 -f ./run_workload.yml -o ./results{{results_suffix}}/fio_results/
   tags:
     - fio_tools
     - run_fio
+
+- name: Kill stat collection processes
+  shell: 'pkill "{{ process }}"'
+  loop:
+      - iostat
+      - vmstat
+      - mpstat
+      - top
+      - sar
+      - pidstat
+  loop_control:
+    loop_var: process
+  ignore_errors: yes
+  tags:
+    - fio_tools
+    - kill_fio_stat
+
+- name: Save gprofile results
+  run_once: true
+  delegate_to: "{{ groups['profiling_server'][0] }}"
+  shell:  'gluster vol profile "{{ gluster_vol_profiling }}" info > "{{ results_root_folder }}"/fio_results/gprofile_stats/gprofile."{{ step }}".txt'
+  vars:
+    step: post_fio
+  tags:
+    - fio_tools
+
+- name: gather all results
+  import_tasks: gather_all_results.yml
+  tags:
+    - fio_tools
 
 
 
