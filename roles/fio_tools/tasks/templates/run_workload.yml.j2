@@ -1,0 +1,9 @@
+
+hosts:
+{% for host in groups['rhhihosts'] %}
+  - {{host}}
+{% endfor %}
+clients:
+{% for client in vm_ips %}
+  - {{client}}
+{% endfor %}

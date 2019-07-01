@@ -1,0 +1,23 @@
+---
+- name: Initiate IOSTAT logs
+  shell: 'nohup iostat -dkxtz -c 10 -N > "{{ results_root_folder }}"/fio_results/hypervisor_stats-"{{inventory_hostname}}"/iostat-"{{step}}".txt &'
+
+- name: Initiate VMSTAT logs
+  shell: 'nohup vmstat -n 10 >"{{ results_root_folder }}"/fio_results/hypervisor_stats-"{{inventory_hostname}}"/vmstat-"{{step}}".txt &'
+
+- name: Initiate MPSTAT logs
+  shell: 'nohup sar -r 5 > "{{ results_root_folder }}"/fio_results/hypervisor_stats-"{{inventory_hostname}}"/mpstat-"{{step}}".txt &'
+  ignore_errors: yes
+
+- name: Initiate TOP logs
+  shell: 'nohup top -bH -d 10 > "{{ results_root_folder }}"/fio_results/hypervisor_stats-"{{inventory_hostname}}"/top-"{{step}}".txt &'
+
+- name: Initiate NETWORK logs
+  shell: 'nohup sar -n DEV 10 > "{{ results_root_folder }}"/fio_results/hypervisor_stats-"{{inventory_hostname}}"/sar-"{{step}}".txt &'
+
+- name: Initiate PIDSTAT logs
+  shell: 'nohup pidstat -d 5 > "{{ results_root_folder }}"/fio_results/hypervisor_stats-"{{inventory_hostname}}"/pidstat-d-"{{step}}".txt &'
+
+- name: Initiate PIDSTAT logs
+  shell: 'nohup pidstat -urh 5 > "{{ results_root_folder }}"/fio_results/hypervisor_stats-"{{inventory_hostname}}"/pidstat-urh-5-"{{step}}".txt &'
+...

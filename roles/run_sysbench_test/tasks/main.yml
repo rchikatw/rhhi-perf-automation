@@ -2,4 +2,6 @@
     - name: Running sysbench Test
       delegate_to: "{{vm_ip}}"
       run_once: true
-      shell: 'nohup sysbench --db-driver=mysql --mysql-user=root --mysql-password="{{ mysql_root_password }}"  --time=300 --mysql-db=sbtest --table_size="{{ sysbench_table_size }}" --tables="{{ sysbench_number_of_table }}"  --threads="{{ thread_count }}" /usr/share/sysbench/oltp_read_write.lua run > /home/root/rhhi-test-automation/sysbench-results/sysbench-result-"{{thread_count}}".out &'
+      shell: 'nohup sysbench --db-driver=mysql --mysql-user=root --mysql-password="{{ mysql_root_password }}"  --time=300 --mysql-db=sbtest --table_size="{{ sysbench_table_size }}" --tables="{{ sysbench_number_of_table }}"  --threads="{{ thread_count }}" /usr/share/sysbench/oltp_read_write.lua run >> /home/root/rhhi-test-automation/sysbench-results/sysbench-result.out &'
+
+

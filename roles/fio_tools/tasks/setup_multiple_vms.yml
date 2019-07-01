@@ -1,0 +1,8 @@
+- include_tasks: included_task_hack.yml
+  vars:
+    vm_index: "{{item}}"
+  with_items: "{{total_no_of_vms_fio_per_host}}"
+  when: total_no_of_vms_fio_per_host is defined
+  tags:
+    -included_task_hack
+

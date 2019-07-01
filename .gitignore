@@ -2,3 +2,8 @@
 *.pyc
 *.log
 *.retry
+*.pickle
+sysbench-results/*
+gsheets_credentials.json
+gdrive_credentials.json
+results*/

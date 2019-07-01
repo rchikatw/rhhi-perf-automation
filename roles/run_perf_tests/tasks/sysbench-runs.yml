@@ -1,19 +1,13 @@
 ---
-#    - import_tasks: record_stats.yml
-#      vars:
-#        step: pre-runs
-
     - name: run test
-      delegate_to: "{{vm_ip}}"
-      include_role:
+      import_role: 
         name: run_sysbench_test
+      delegate_to: "{{vm_ip}}"
 
     - name: Polling sysbench test
-      delegate_to: "{{vm_ip}}"
-      include_role:
+      import_role:
         name: polling_sysbench
-
-#    - import_tasks: kill_stats.yml
+      delegate_to: "{{vm_ip}}"
 
     - name: Take a 5 second pause
       shell: sleep 5
