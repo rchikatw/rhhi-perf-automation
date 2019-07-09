@@ -31,6 +31,8 @@ vm_disk_interface: virtio_scsi
 results_root_folder: /home/root/rhhi-test-automation
 host_folders:
   - /home/root/rhhi-test-automation
+  - /home/root/rhhi-test-automation/fio_results/hypervisor_stats-{{inventory_hostname}}
+  - /home/root/rhhi-test-automation/fio_results/gprofile_stats
   - /home/root/rhhi-test-automation/sysbench-results/hypervisor_stats-{{inventory_hostname}}
   - /home/root/rhhi-test-automation/sysbench-results/gprofile_stats
 
