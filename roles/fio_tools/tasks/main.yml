@@ -157,7 +157,7 @@
 - name: Save gluster volume info results
   run_once: true
   delegate_to: "{{ groups['profiling_server'][0] }}"
-  shell:  'gluster vol  "{{ gluster_vol_profiling }}" info > "{{ results_root_folder }}"/fio_results/gprofile_stats/gvol-info."{{ step }}".txt'
+  shell:  'gluster vol  info "{{ gluster_vol_profiling }}"  > "{{ results_root_folder }}"/fio_results/gprofile_stats/gvol-info."{{ step }}".txt'
   vars:
     step: pre_fio
   tags:
