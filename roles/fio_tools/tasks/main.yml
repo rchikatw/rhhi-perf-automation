@@ -154,6 +154,8 @@
   tags:
     - fio_tools
 
+
+
 - name: Save gluster volume info results
   run_once: true
   delegate_to: "{{ groups['profiling_server'][0] }}"
@@ -206,6 +208,14 @@
   shell:  'gluster vol profile "{{ gluster_vol_profiling }}" info > "{{ results_root_folder }}"/fio_results/gprofile_stats/gprofile."{{ step }}".txt'
   vars:
     step: post_fio
+  tags:
+    - fio_tools
+
+- name: Stopping gluster vol profiling
+  run_once: true
+  delegate_to: "{{ groups['profiling_server'][0] }}"
+  shell:  'gluster vol profile "{{ gluster_vol_profiling }}" stop'
+  ignore_errors: yes
   tags:
     - fio_tools
 
