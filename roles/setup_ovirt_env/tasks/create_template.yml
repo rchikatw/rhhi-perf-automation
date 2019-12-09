@@ -1,13 +1,11 @@
 ---
-- name: Create oVirt image template
-  vars:
-    qcow_url: "{{qcow_url}}"
-    template_cluster: "{{template_cluster}}"
-    template_name: "{{template_name}}"
-    template_memory: "{{template_memory}}"
-    template_cpu: "{{template_cpu}}"
-    template_disk_size: "{{template_disk_size}}"
-    template_disk_storage: "{{template_disk_storage}}"
+- name: Check if template exists
+  ovirt_template_info:
+    auth: "{{ ovirt_auth }}"
+    pattern: "name={{ template_name }} and datacenter={{ template_cluster }}"
+  register: template_info
 
+- name: Create oVirt image template
   include_role:
     name: ovirt.image-template
+  when: template_info.ovirt_templates | length == 0

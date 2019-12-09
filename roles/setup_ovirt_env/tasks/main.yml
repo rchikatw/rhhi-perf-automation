@@ -1,5 +1,9 @@
 ---
-#- import_tasks: create_template.yml
+- import_tasks: create_template.yml
+  run_once: true
+  tags:
+    - create_template
+
 - import_tasks: init_vm.yml
   run_once: true
   tags:
